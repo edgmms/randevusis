@@ -1,0 +1,219 @@
+﻿@model StoreModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h2 class="mb-0">İşletme Profilim</h2>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" asp-antiforgery="true">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <fieldset>
+                                <legend class="fs-base fw-bold border-bottom pb-2 mb-3">
+                                    Genel Bilgiler
+                                </legend>
+                                <div class="row mb-3">
+                                    <label asp-for="Name" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" asp-for="Name" />
+                                        <span asp-validation-for="Name"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="Email" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="email" class="form-control" asp-for="Email" />
+                                        <span asp-validation-for="Email"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="PhoneNumber" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control phone-mask" asp-for="PhoneNumber" />
+                                        <span asp-validation-for="PhoneNumber"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="Address" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <textarea type="text" class="form-control" asp-for="Address"></textarea>
+                                        <span asp-validation-for="Address"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="TaxAdministration" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" asp-for="TaxAdministration" />
+                                        <span asp-validation-for="TaxAdministration"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="TaxNumber" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" asp-for="TaxNumber" />
+                                        <span asp-validation-for="TaxNumber"></span>
+                                    </div>
+                                </div>
+                                <legend class="fs-base fw-bold border-bottom pb-2 mb-3">
+                                    Randevu Takvimi Zaman Ayarları
+                                </legend>
+
+                                <div class="row mb-3">
+                                    <label asp-for="BusinessStartTime" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="time" class="form-control" asp-for="BusinessStartTime" />
+                                        <span asp-validation-for="BusinessStartTime"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="BusinessEndTime" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="time" class="form-control" asp-for="BusinessEndTime" />
+                                        <span asp-validation-for="BusinessEndTime"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="SaturdayHoliday" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input asp-for="SaturdayHoliday" />
+                                        <span asp-validation-for="SaturdayHoliday"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="SundayHoliday" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input asp-for="SundayHoliday" />
+                                        <span asp-validation-for="SundayHoliday"></span>
+                                    </div>
+                                </div>
+
+                                <legend class="fs-base fw-bold border-bottom pb-2 mb-3">
+                                    Sms Entegrasyonu Bilgileri
+                                </legend>
+
+                                <div class="row mb-3">
+                                    <label asp-for="SmsUsername" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" asp-for="SmsUsername" />
+                                        <span asp-validation-for="SmsUsername"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="SmsPassword" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" asp-for="SmsPassword" />
+                                        <span asp-validation-for="SmsPassword"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="SmsHeader" class="col-lg-3 col-form-label"></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" asp-for="SmsHeader" />
+                                        <span asp-validation-for="SmsHeader"></span>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-6">
+                            <fieldset>
+                                <legend class="fs-base fw-bold border-bottom pb-2 mb-3">
+                                    Randevu Takvimi Renk Ayarları
+                                </legend>
+
+                                <div class="alert alert-success alert-dismissible">
+                                    <div class="alert-heading fw-semibold"> "Randevu Durumu: Tamamlandı" ve "Ödeme Durumu: Tamamlandı" ise <br /> "Nakit veya Kredi Kartı" na ait renk gösterilecektir. </div>
+                                </div>
+
+                                <div class="alert alert-success alert-dismissible">
+                                    <div class="alert-heading fw-semibold"> "Randevu Durumu: Tamamlandı" olsa dahi "Ödeme Durumu: Bekliyor" ise <br /> "Ödeme Durumu: Bekliyor" a ait renk gösterilecektir. </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="AppointmentStatusPendingColor" class="col-lg-6 col-form-label"></label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control colorpicker-basic" asp-for="AppointmentStatusPendingColor" />
+                                        <span asp-validation-for="AppointmentStatusPendingColor"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="AppointmentStatusCanceledColor" class="col-lg-6 col-form-label"></label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control colorpicker-basic" asp-for="AppointmentStatusCanceledColor" />
+                                        <span asp-validation-for="AppointmentStatusCanceledColor"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="AppointmentStatusPostponedColor" class="col-lg-6 col-form-label"></label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control colorpicker-basic" asp-for="AppointmentStatusPostponedColor" />
+                                        <span asp-validation-for="AppointmentStatusPostponedColor"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="AppointmentStatusPatientConfirmedColor" class="col-lg-6 col-form-label"></label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control colorpicker-basic" asp-for="AppointmentStatusPatientConfirmedColor" />
+                                        <span asp-validation-for="AppointmentStatusPatientConfirmedColor"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="PaymentStatusPendingColor" class="col-lg-6 col-form-label"></label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control colorpicker-basic" asp-for="PaymentStatusPendingColor" />
+                                        <span asp-validation-for="PaymentStatusPendingColor"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="PaymentTypeCashColor" class="col-lg-6 col-form-label"></label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control colorpicker-basic" asp-for="PaymentTypeCashColor" />
+                                        <span asp-validation-for="PaymentTypeCashColor"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label asp-for="PaymentTypeCreditCardColor" class="col-lg-6 col-form-label"></label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control colorpicker-basic" asp-for="PaymentTypeCreditCardColor" />
+                                        <span asp-validation-for="PaymentTypeCreditCardColor"></span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <script src="~/admin/assets/js/vendor/pickers/color/spectrum.js"></script>
+                    <script>
+                        $('.colorpicker-basic').spectrum({
+                            showPaletteOnly: true,
+                            togglePaletteOnly: true,
+                            togglePaletteMoreText: 'Genişlet',
+                            togglePaletteLessText: 'Daralt',
+                            //color: 'blanchedalmond',
+                            palette: [
+                                ["#000", "#444", "#666", "#999", "#ccc", "#eee", "#f3f3f3", "#fff"],
+                                ["#f00", "#f90", "#ff0", "#0f0", "#0ff", "#00f", "#90f", "#f0f"],
+                                ["#f4cccc", "#fce5cd", "#fff2cc", "#d9ead3", "#d0e0e3", "#cfe2f3", "#d9d2e9", "#ead1dc"],
+                                ["#ea9999", "#f9cb9c", "#ffe599", "#b6d7a8", "#a2c4c9", "#9fc5e8", "#b4a7d6", "#d5a6bd"],
+                                ["#e06666", "#f6b26b", "#ffd966", "#93c47d", "#76a5af", "#6fa8dc", "#8e7cc3", "#c27ba0"],
+                                ["#c00", "#e69138", "#f1c232", "#6aa84f", "#45818e", "#3d85c6", "#674ea7", "#a64d79"],
+                                ["#900", "#b45f06", "#bf9000", "#38761d", "#134f5c", "#0b5394", "#351c75", "#741b47"],
+                                ["#600", "#783f04", "#7f6000", "#274e13", "#0c343d", "#073763", "#20124d", "#4c1130"]
+                            ]
+                        });
+                    </script>
+                    <div class="text-end">
+                        <button type="submit" name="save" class="btn btn-primary">
+                            Kaydet <i class="ph-paper-plane-tilt ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

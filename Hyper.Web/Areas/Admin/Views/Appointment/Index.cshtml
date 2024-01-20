@@ -1,0 +1,393 @@
+﻿@using Hyper.Core.Domain.Appointments;
+@model AppointmentSearchModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-center py-0">
+
+                <h2 class="py-3 mb-0  mx-1">
+                    Randevular
+                </h2>
+
+                <a href="#" class="nav-link dropdown-toggle d-none d-sm-block" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="ph-gear"></i>
+                </a>
+
+                <div class="dropdown-menu">
+                    <button data-duration="00:05" class="changeSlotDuration dropdown-item">5 Dakikalık Görünüm</button>
+                    <button data-duration="00:10" class="changeSlotDuration dropdown-item">10 Dakikalık Görünüm</button>
+                    <button data-duration="00:15" class="changeSlotDuration dropdown-item">15 Dakikalık Görünüm</button>
+                    <button data-duration="00:20" class="changeSlotDuration dropdown-item">20 Dakikalık Görünüm</button>
+                    <button data-duration="00:25" class="changeSlotDuration dropdown-item">25 Dakikalık Görünüm</button>
+                    <button data-duration="00:30" class="changeSlotDuration dropdown-item">30 Dakikalık Görünüm</button>
+                    <button data-duration="00:35" class="changeSlotDuration dropdown-item">35 Dakikalık Görünüm</button>
+                    <button data-duration="00:40" class="changeSlotDuration dropdown-item">40 Dakikalık Görünüm</button>
+                    <button data-duration="00:45" class="changeSlotDuration dropdown-item">45 Dakikalık Görünüm</button>
+                    <button data-duration="00:50" class="changeSlotDuration dropdown-item">50 Dakikalık Görünüm</button>
+                    <button data-duration="00:55" class="changeSlotDuration dropdown-item">55 Dakikalık Görünüm</button>
+                    <button data-duration="00:60" class="changeSlotDuration dropdown-item">60 Dakikalık Görünüm</button>
+                </div>
+
+                <div class="hstack gap-2 ms-sm-auto my-auto">
+
+                    <div class="input-group">
+                        <input class="form-control" id="PatientName" placeholder="Danışan Adı">
+                        <input class="form-control" id="PatientSurname" placeholder="Danışan Soyadı">
+                        <button type="button" class="btn btn-primary quickSearch">
+                            Danışan Ara
+                            <i class="ph-magnifying-glass mx-1"></i>
+                        </button>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-labeled btn-labeled-end d-none d-sm-block w-50" id="btnCreatePatient">
+                        Danışan Ekle
+                        <span class="btn-labeled-icon bg-black bg-opacity-20">
+                            <i class="ph-user-plus"></i>
+                        </span>
+                    </button>
+
+                    <button type="button" class="btn btn-primary btn-labeled btn-labeled-end w-50" id="btnCreateAppointment">
+                        Randevu Oluştur
+                        <span class="btn-labeled-icon bg-black bg-opacity-20">
+                            <i class="ph-calendar-plus"></i>
+                        </span>
+                    </button>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="fullcalendar-selectable"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="appointmentModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Randevu Bilgileri</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="appointmentModalBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="patientModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Danışan Bilgileri</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="patientModalBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fc-event {
+        cursor: pointer;
+    }
+</style>
+
+@section Scripts{
+
+    <script>
+
+        //show create patient modal
+        $('#btnCreatePatient').click(function () {
+            $.ajax({
+                url: "/Admin/Patient/CreateAjax",
+                method: "GET",
+                success: function (data) {
+                    $('#patientModalBody').html("");
+                    $('#patientModalBody').html(data);
+
+                    $('input').attr("autocomplete", "off");
+                    
+                    datepicker.init();
+
+                    const maskPhoneElement = document.querySelector('.phone-mask');
+                    if (maskPhoneElement) {
+                        const maskPhone = IMask(maskPhoneElement, {
+                            mask: '0(000)000-00-00'
+                        });
+                    }
+
+                    $('#patientModal').modal('show');
+                }
+            });
+        });
+
+
+        //show create appointment modal
+        $('#btnCreateAppointment').click(function () {
+            $.ajax({
+                url: "/Admin/Appointment/Create",
+                method: "GET",
+                success: function (data) {
+                    $('#appointmentModalBody').html("");
+                    $('#appointmentModalBody').html(data);
+                    $('#appointmentModal').modal('show');
+                    Select2Selects.init();
+                    datepicker.init();
+                    $('#periodCountPanel').hide();
+                }
+            });
+        });
+
+        //submit modal forms
+        $(document).on('submit', 'form', function (event) {
+            event.preventDefault();
+            $.validator.unobtrusive.parse('form');
+
+            var form = $(this);
+            var _data = form.serialize();
+            var _url = $(this).attr('action');
+            var _method = $(this).attr('method');
+
+            if ($(this).valid()) {
+                $.ajax({
+                    url: _url,
+                    data: _data,
+                    method: "POST",
+                    success: function () {
+                        $('.modal').modal('hide');
+                        fcalendar.init();
+                    }
+                });
+            }
+        });
+
+        //appointment period type change events
+        $(document).on('change', '#PeriodTypeId', function () {
+            showPeriodCountPanel();
+        })
+
+        function showPeriodCountPanel() {
+            var selectedPeriodTypeId = document.getElementById('PeriodTypeId').value;
+            if (selectedPeriodTypeId != @((int)PeriodType.OneTime)) {
+                $('#periodCountPanel').show();
+            }
+            else {
+                $('#periodCountPanel').hide();
+            }
+        }
+    </script>
+
+    <script>
+        var Select2Selects = function () {
+            var _componentSelect2 = function () {
+
+                function formatResult(data) {
+                    if (data.loading)
+                        return data.text;
+                    return '<div class="select2-result-repository clearfix"><div class="select2-result-repository__title">' + data.text + '</div></div>';
+                }
+
+                // Format selection
+                function formatSelection(item) {
+                    return item.text;
+                }
+                // Initialize
+                $('#AssignedPatientId').select2({
+                    language: {
+                        inputTooShort: function (args) {
+                            return "En az 3 harf giriniz";
+                        },
+                        noResults: function () {
+                            return "Kayıt bulunamadı";
+                        },
+                        searching: function () {
+                            return "Aranıyor...";
+                        }
+                    },
+                    dropdownParent: $("#appointmentModal"),
+                    ajax: {
+                        url: '/Admin/Patient/GetPatientsByName',
+                        dataType: 'json',
+                        delay: 100,
+                        data: function (params) {
+                            return {
+                                patientName: params.term, // search term
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: data.Data,
+                            };
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 3,
+                    templateResult: formatResult, // omitted for brevity, see the source of this page
+                    templateSelection: formatSelection // omitted for brevity, see the source of this page
+                });
+            };
+
+            return {
+                init: function () {
+                    _componentSelect2();
+                }
+            }
+        }();
+    </script>
+
+    <script>
+        //hidden holidays
+        const _hiddenDays = [];
+        const _daysOfWeek = [0, 1, 2, 3, 4, 5, 6];
+
+        @if (Model.SundayHoliday)
+        {
+            <text>
+                _hiddenDays.push(0);
+            var index = _daysOfWeek.indexOf(0);
+            _daysOfWeek.splice(index, 1);
+            </text>
+        }
+
+        @if (Model.SaturdayHoliday)
+        {
+            <text>
+                _hiddenDays.push(6);
+            var index = _daysOfWeek.indexOf(6);
+            _daysOfWeek.splice(index, 1);
+            </text>
+        }
+
+                                        //now
+                                        const _firstDay = new Date().getDay();
+
+        // Default events
+        const events = [];
+
+        if (!checkCookie("slotDuration")) {
+            setCookie("slotDuration", "00:10");
+        }
+
+        var _slotDuration = getCookie("slotDuration");
+
+        // Define element
+        const calendarSelectableElement = document.querySelector('.fullcalendar-selectable');
+
+        const calendarSelectableInit = new FullCalendar.Calendar(calendarSelectableElement, {
+            contentHeight: "auto",
+            allDaySlot: false,
+            eventMinHeight: 25,
+            displayEventTime: false,
+            hiddenDays: _hiddenDays,
+            firstDay: _firstDay,
+            slotDuration: _slotDuration,
+            slotMinTime: @Html.Raw(Model.BusinessStartTime), //işe başlangıç
+            slotMaxTime: @Html.Raw(Model.BusinessEndTime), //iş bitiş
+            slotLabelFormat: {
+                hour: 'numeric',
+                minute: '2-digit',
+            },
+            businessHours: {
+                daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+                startTime: @Html.Raw(Model.BusinessStartTime), //işe başlangıç
+                endTime: @Html.Raw(Model.BusinessEndTime),  //iş bitiş
+            },
+            locale: "tr",
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            initialView: "timeGridWeek",
+            navLinks: true, // can click day/week names to navigate views
+            selectable: false,
+            selectMirror: true,
+            events: {
+                url: '/Admin/Appointment/ApoointmentCalendar',
+                method: 'POST',
+                extraParams: function () {
+                    return {
+                        __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val(),
+                        PatientName: $('#PatientName').val(),
+                        PatientSurname: $('#PatientSurname').val(),
+                    }
+                },
+                failure: function () {
+                    alert('Takvimi şuan yükleyemiyoruz, az sonra tekrar deneyiniz');
+                },
+            },
+            eventClick: function (arg) {
+                var eventId = arg.event._def.publicId;
+                $.ajax({
+                    url: "/Admin/Appointment/Edit/" + eventId,
+                    method: "GET",
+                    success: function (data) {
+                        $('#appointmentModalBody').html("");
+                        $('#appointmentModalBody').html(data);
+                        $('#appointmentModal').modal('show');
+                        datepicker.init();
+                        Select2Selects.init();
+                        $.validator.unobtrusive.parse('form');
+                    }
+                });
+            },
+            eventMouseEnter: function (mouseEnterInfo) {
+                var tooltip = new bootstrap.Tooltip(mouseEnterInfo.el, {
+                    title: mouseEnterInfo.event._def.extendedProps.hoverText,
+                    trigger: 'hover',
+                    html: true,
+                });
+            },
+            eventMouseLeave: function (mouseLeaveInfo) {
+                bootstrap.Tooltip.getInstance(mouseLeaveInfo.el).dispose();
+            },
+            editable: false,
+            direction: document.dir == 'rtl' ? 'rtl' : 'ltr',
+            dayMaxEvents: true // allow "more" link when too many events
+        });
+
+        calendarSelectableInit.render();
+
+        var fcalendar = function () {
+
+            var _componentFullCalendar = function () {
+                if (calendarSelectableElement) {
+                    calendarSelectableInit.refetchEvents();
+                    // Resize calendar when sidebar toggler is clicked
+                    calendarSelectableInit.updateSize();
+
+                    document.querySelectorAll('.sidebar-control').forEach(function (sidebarToggle) {
+                        sidebarToggle.addEventListener('click', function () {
+                            calendarSelectableInit.updateSize();
+                        })
+                    });
+                }
+            };
+            return {
+                init: function () {
+                    _componentFullCalendar();
+                }
+            }
+        }();
+
+        $('.quickSearch').click(function () {
+            fcalendar.init();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            fcalendar.init();
+        });
+
+        $(document).on('click', '.changeSlotDuration', function (e) {
+            var duration = $(this).data('duration');
+            setCookie("slotDuration", duration, 10);
+            document.location.reload();
+        })
+
+    </script>
+}

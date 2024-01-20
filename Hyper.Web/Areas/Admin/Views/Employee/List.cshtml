@@ -1,0 +1,231 @@
+﻿@model EmployeeSearchModel
+
+<div class="card">
+    <div class="card-header d-flex align-items-center py-0">
+        <h2 class="py-3 mb-0"> Personeller</h2>
+        <div class="ms-auto my-auto">
+            <a asp-action="Create" class="btn btn-primary btn-labeled btn-labeled-end">
+                Personel Ekle
+                <span class="btn-labeled-icon bg-black bg-opacity-20">
+                    <i class="ph-plus-circle"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-light wmin-250" data-bs-toggle="modal" data-bs-target="#searchModal">
+                Detaylı Arama Yap
+                <i class="ph-magnifying-glass mx-3"></i>
+            </button>
+            <div id="searchModal" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Detaylı Arama</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <fieldset>
+                                        <div class="row mb-3">
+                                            <label asp-for="SearchName" class="col-lg-3 col-form-label"></label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" asp-for="SearchName" />
+                                                <span asp-validation-for="SearchName"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="SearchSurname" class="col-lg-3 col-form-label"></label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" asp-for="SearchSurname" />
+                                                <span asp-validation-for="SearchSurname"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="SearchTurkishIdentityNumber" class="col-lg-3 col-form-label"></label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" asp-for="SearchTurkishIdentityNumber" />
+                                                <span asp-validation-for="SearchTurkishIdentityNumber"></span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-6">
+                                    <fieldset>
+                                        <div class="row mb-3">
+                                            <label asp-for="SearchEmail" class="col-lg-3 col-form-label"></label>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" asp-for="SearchEmail" />
+                                                <span asp-validation-for="SearchEmail"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="SearchPhone" class="col-lg-3 col-form-label"></label>
+                                            <div class="col-lg-9">
+                                                <input class="form-control phone-mask" asp-for="SearchPhone" />
+                                                <span asp-validation-for="SearchPhone"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="SearchAddress" class="col-lg-3 col-form-label"></label>
+                                            <div class="col-lg-9">
+                                                <input asp-for="SearchAddress" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="SearchSendEmailNotifications" class="col-lg-3 col-form-label"></label>
+                                            <div class="col-lg-9 d-flex align-items-center">
+                                                <input asp-for="SearchSendEmailNotifications" />
+                                                <span asp-validation-for="SearchSendEmailNotifications"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label asp-for="SearchSendSmsNotifications" class="col-lg-3 col-form-label"></label>
+                                            <div class="col-lg-9 d-flex align-items-center">
+                                                <input asp-for="SearchSendSmsNotifications" />
+                                                <span asp-validation-for="SearchSendSmsNotifications"></span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnSearch" class="btn btn-primary btn-xl">Ara <i class="ph-magnifying-glass mx-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-responsive table-hover" id="employee-table">
+        <thead>
+            <tr>
+                @*<th>Id</th>*@
+                <th>T.C. Kimlik Numarası</th>
+                <th>İsim</th>
+                <th>Soyisim</th>
+                @*<th>Doğum T.</th>*@
+                <th>Email</th>
+                <th>Email Bilgilendirme</th>
+                <th>Telefon</th>
+                <th>Sms Bilgilendirme</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts {
+    <script asp-append-version="true">
+
+        $(document).ready(function () {
+        
+            $('#employee-table').DataTable({
+                "ajax": {
+                    "url": "/Admin/Employee/EmployeeList",
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": function (d) {
+                        d.__RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+                        d.SearchName = $('#SearchName').val();
+                        d.SearchSurname = $('#SearchSurname').val();
+                        d.SearchTurkishIdentityNumber = $('#SearchTurkishIdentityNumber').val();
+                        d.SearchEmail = $('#SearchEmail').val();
+                        d.SearchSendEmailNotifications = $('#SearchSendEmailNotifications').is(":checked");
+                        d.SearchPhoneNumber = $('#SearchPhone').val();
+                        d.SearchSendSmsNotifications = $('#SearchSendSmsNotifications').is(":checked");
+                        d.SearchAddress = $('#SearchAddress').val();
+                    }
+                },
+                "columns": [
+                    //{
+                    //    "data": "Id",
+                    //    "name": "Id",
+                    //},
+                    {
+                        "data": "TurkishIdentityNumber",
+                        "name": "TurkishIdentityNumber",
+                    },
+                    {
+                        "data": "Name",
+                        "name": "Name",
+                    },
+                    {
+                        "data": "Surname",
+                        "name": "Surname",
+                    },
+                    //{
+                    //    "data": "DateOfBirth",
+                    //    "name": "DateOfBirth",
+                    //    "mRender": function (data, type, full) {
+
+                    //        if(data)
+                    //            return moment(data).format('DD/MM/YYYY');
+                    //        else
+                    //            return "";
+                    //    }
+                    //},
+                    {
+                        "data": "Email",
+                        "name": "Email",
+                    },
+                    {
+                        "data": "SendEmailNotifications",
+                        "name": "SendEmailNotifications",
+                        "mRender": function (data, type, full) {
+                            if (data)
+                                return '<span class="badge bg-success"> Aktif </span>';
+                            else
+                                return '<span class="badge bg-danger"> Pasif </span>';
+                        }
+                    },
+                    {
+                        "data": "Phone",
+                        "name": "Phone",
+                    },
+                    {
+                        "data": "SendSmsNotifications",
+                        "name": "SendSmsNotifications",
+                        "mRender": function (data, type, full) {
+                            if (data)
+                                return '<span class="badge bg-success"> Aktif </span>';
+                            else
+                                return '<span class="badge bg-danger"> Pasif </span>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, full, meta) {
+                            var html = '<a href="/Admin/Employee/Edit/' + full.Id + '" class="btn btn-light btn-sm">Detay<i class="ph-note-pencil mx-1"></i></a>';
+                            return html;
+                        }
+                    },
+                ],
+                ordering: false,
+                autoWidth: false,
+                processing: false,                       // for show processing bar
+                serverSide: true,                       // for process on server side
+                orderMulti: false,                      // for disable multi column order
+                lengthMenu: [10, 25, 50, 100],
+                language: {
+                    emptyTable: "Kayıt bulunamadı..",
+                    sInfo: "_TOTAL_ Kayıttan _START_ ile _END_ arasındakiler gösteriliyor.",
+                    search: '<div class="form-control-feedback form-control-feedback-end flex-fill">_INPUT_<div class="form-control-feedback-icon"><i class="ph-magnifying-glass opacity-50"></i></div></div>',
+                    searchPlaceholder: 'Ara...',
+                    lengthMenu: '<span class="me-3">Gösterilen:</span> _MENU_',
+                    paginate: { 'first': 'İlk', 'last': 'Son', 'next': document.dir == "rtl" ? '&larr;' : '&rarr;', 'previous': document.dir == "rtl" ? '&rarr;' : '&larr;' }
+                },
+                dom: '<"datatable-scroll"t><"datatable-footer"lp>',
+
+            });
+
+            $('#btnSearch').click(function () {
+                oTable = $('#employee-table').DataTable();
+                oTable.draw();
+                $('#searchModal').modal('hide');
+            });
+        });
+    </script>
+}

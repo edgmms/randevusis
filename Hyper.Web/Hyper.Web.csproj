@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hyper.Services\Hyper.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Infrastructure\Mvc\Filters\" />
+    <Folder Include="Areas\Admin\Infrastructure\Mvc\Middlewares\" />
+    <Folder Include="wwwroot\admin\assets\js\vendor\media\Archiver.app\Contents\Resources\en.lproj\Archiver.Help\pgs2\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\admin\assets\js\vendor\media\Archiver.app\Contents\Frameworks\Sparkle.framework\Versions\A\Resources\fr_CA.lproj" />
+    <None Include="wwwroot\admin\assets\js\vendor\media\Archiver.app\Contents\Frameworks\Sparkle.framework\Versions\A\Resources\pt.lproj" />
+  </ItemGroup>
+
+</Project>

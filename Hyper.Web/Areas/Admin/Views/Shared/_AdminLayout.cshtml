@@ -1,0 +1,379 @@
+﻿<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Randevu Sistemi</title>
+    <link href="~/admin/assets/fonts/inter/inter.css" rel="stylesheet" type="text/css">
+    <link href="~/admin/assets/icons/phosphor/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="~/admin/css/ltr/all.min.css" id="stylesheet" rel="stylesheet" type="text/css">
+    <style>
+        .field-validation-error {
+            color: red
+        }
+
+        .datepicker {
+            z-index: 2048;
+        }
+    </style>
+
+    @*<script src="~/admin/assets/demo/demo_configurator.js"></script>*@
+    <script src="~/admin/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="~/admin/assets/js/jquery/jquery.min.js"></script>
+ @*   <script src="~/admin/assets/js/vendor/visualization/d3/d3.min.js"></script>
+    <script src="~/admin/assets/js/vendor/visualization/d3/d3_tooltip.js"></script>*@
+    <script src="~/admin/assets/js/vendor/forms/inputs/imask.min.js"></script>
+    <script src="~/admin/assets/js/vendor/forms/selects/select2.min.js"></script>
+    <script src="~/admin/assets/js/vendor/pickers/datepicker.min.js"></script>
+    <script src="~/admin/assets/js/vendor/tables/datatables/datatables.min.js"></script>
+    <script src="~/admin/assets/js/vendor/ui/moment/moment.min.js"></script>
+    <script src="~/admin/assets/js/vendor/ui/fullcalendar/main.min.js"></script>
+    <script src="~/admin/assets/js/vendor/ui/fullcalendar/locales-all.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/admin/js/app.js"></script>
+
+</head>
+
+<body>
+
+    <div class="navbar navbar-dark navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="d-flex d-lg-none me-2">
+                <button type="button" class="navbar-toggler sidebar-mobile-main-toggle rounded-pill">
+                    <i class="ph-list"></i>
+                </button>
+            </div>
+
+            <div class="navbar-brand flex-1 flex-lg-0">
+                <a asp-route="Admin" class="d-inline-flex align-items-center">
+                    <img src="~/admin/assets/images/logo_icon.svg" alt="">
+                    <img src="~/admin/assets/images/diyeet-logo.png" class="d-none d-sm-inline-block ms-1" alt="">
+                </a>
+            </div>
+            @await Component.InvokeAsync("UserProfile")
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="sidebar sidebar-main sidebar-expand-lg align-self-start">
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-body d-flex justify-content-center">
+                        <h5 class="sidebar-resize-hide flex-grow-1 my-auto">Menü</h5>
+                        <div>
+                            <button type="button"
+                                    class="btn btn-light btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
+                                <i class="ph-arrows-left-right"></i>
+                            </button>
+                            <button type="button"
+                                    class="btn btn-light btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
+                                <i class="ph-x"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <ul class="nav nav-sidebar" data-nav-type="accordion">
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Appointment" class="nav-link">
+                                <i class="ph-calendar-check"></i>
+                                <span>Randevu Takvimi</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="List" asp-controller="Product" class="nav-link">
+                                <i class="ph-mask-happy"></i>
+                                <span>Ürünler ve Hizmetler</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="List" asp-controller="Patient" class="nav-link">
+                                <i class="ph-user"></i>
+                                <span>Danışanlar</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="List" asp-controller="Employee" class="nav-link">
+                                <i class="ph-users"></i>
+                                <span>Personeller</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="CashReport" asp-controller="Report" class="nav-link">
+                                <i class="ph-bank"></i>
+                                <span>Kasa Raporu</span>
+                            </a>
+                        </li>
+
+                        @*
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-bank"></i>
+                        <span>Kasa Raporu</span>
+                        </a>
+                        </li>
+
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-chats-circle"></i>
+                        <span>Sms Raporu</</span>
+                        </a>
+                        </li>
+
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-envelope"></i>
+                        <span>Mail Raporu</</span>
+                        </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-user"></i>
+                        <span>Kullanıcılar</span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-hand-pointing"></i>
+                        <span>Erişim Kontrolü</span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-buildings"></i>
+                        <span>Şube Ayarları</span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-gear"></i>
+                        <span>Sistem Ayarları</span>
+                        </a>
+                        </li>*@
+
+                        @* <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link">
+                        <i class="ph-chart-line"></i>
+                        <span>Raporlar</span>
+                        </a>
+                        <ul class="nav-group-sub collapse">
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-chats-circle"></i>
+                        <span>Sms Gönderim Raporu</span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-envelope"></i>
+                        <span>Mail Gönderim Raporu</span>
+                        </a>
+                        </li>
+                        </ul>
+                        </li>*@
+                        @*           <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link">
+                        <i class="ph-gear"></i>
+                        <span>Ayarlar</span>
+                        </a>
+                        <ul class="nav-group-sub collapse">
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-buildings"></i>
+                        <span>Şubeler</span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-user"></i>
+                        <span>Kullanıcılar</span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-user-gear"></i>
+                        <span>Kullanıcı Rolleri</span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-hand-pointing"></i>
+                        <span>Erişim Kontrolü</span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="#" class="nav-link">
+                        <i class="ph-gear"></i>
+                        <span>Sistem Ayarları</span>
+                        </a>
+                        </li>
+                        </ul>
+                        </li>*@
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content-wrapper">
+            <div class="content">
+                @Html.AntiForgeryToken()
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-sm navbar-footer border-top">
+        <div class="container-fluid">
+            <span>
+                &copy; 2023 <a href="">Randevu Sistemi</a>
+            </span>
+        </div>
+    </div>
+
+
+    <script>
+
+        var datepicker = function () {
+            var _componentDatePicker = function () {
+                const dpBasicElement = document.querySelector('.datepicker-basic');
+                if (dpBasicElement) {
+                    const dpBasic = new Datepicker(dpBasicElement, {
+                        container: '.content-inner',
+                        buttonClass: 'btn',
+                        prevArrow: document.dir == 'rtl' ? '&rarr;' : '&larr;',
+                        nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
+                        language: "tr",
+                        weekStart: 1,
+                        format: "dd/mm/yyyy",
+                        autoclose: "true"
+                    });
+                }
+            };
+            return {
+                init: function () {
+                    _componentDatePicker();
+                }
+            }
+        }();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            datepicker.init();
+        });
+
+    </script>
+
+   <script>
+        //validation
+        $.validator.methods.number = function (value, element) {
+            console.log('validate');
+            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)?(?:,\d+)?$/.test(value);
+        }
+    </script>
+
+    <script>
+        //mask
+        const maskPhoneElement = document.querySelector('.phone-mask');
+        if (maskPhoneElement) {
+            const maskPhone = IMask(maskPhoneElement, {
+                mask: '0(000)000-00-00'
+            });
+        }
+    </script>
+
+    <script>
+        //json
+
+        function convertFormToJSON(form) {
+            const array = $(form).serializeArray(); // Encodes the set of form elements as an array of names and values.
+            const json = {};
+            $.each(array, function () {
+                json[this.name] = this.value || "";
+            });
+            return json;
+        }
+
+    </script>
+
+
+    <script>
+        //cookies
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie(name) {
+            let cookie = getCookie(name);
+            if (cookie != undefined && cookie != "") {
+                return true;
+            }
+
+            return false;
+        }
+    </script>
+
+
+    <script>
+        ///sidebar
+        function closeMainSidebar() {
+            var closeMainSidebar = getCookie("closeMainSideBar");
+
+            if (closeMainSidebar == "close") {
+                $('.sidebar-main').addClass("sidebar-main-resized");
+            }
+            else {
+                $('.sidebar-main').removeClass("sidebar-main-resized");
+            }
+        }
+
+        closeMainSidebar();
+
+        $(document).on('click', '.sidebar-control', function () {
+
+            if (!checkCookie("closeMainSideBar")) {
+                setCookie("closeMainSideBar", "open");
+            }
+            var value = getCookie("closeMainSideBar");
+
+            if (value == "open")
+                value = "close";
+            else
+                value = "open";
+
+            setCookie("closeMainSideBar", value);
+        });
+
+    </script>
+
+    @RenderSection("Scripts", required:false)
+
+    <script>
+        $(document).ready(function () {
+            $('input').attr("autocomplete", "off");
+        })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+﻿@model PatientModel
+
+@if (Model.Id > 0)
+{
+    <input type="hidden" asp-for="Id" />
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <fieldset>
+            <legend class="fs-base fw-bold border-bottom pb-2 mb-3">
+                Kişisel Bilgiler
+            </legend>
+            <div class="row mb-3">
+                <label asp-for="Name" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9">
+                    <input type="text" class="form-control" asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Surname" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9">
+                    <input type="text" class="form-control" asp-for="Surname" />
+                    <span asp-validation-for="Surname"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="TurkishIdentityNumber" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9">
+                    <input type="text" class="form-control" asp-for="TurkishIdentityNumber" />
+                    <span asp-validation-for="TurkishIdentityNumber"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="DateOfBirth" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9">
+                    <input class="form-control datepicker-basic" asp-for="DateOfBirth" />
+                    <span asp-validation-for="DateOfBirth"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Gender" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9">
+                    <div class="form-check-horizontal">
+                        <label class="form-check form-check-inline">
+                            <input type="radio" asp-for="Gender" value="Kadın" class="form-check-input">
+                            <span class="form-check-label">Kadın</span>
+                        </label>
+                        <label class="form-check form-check-inline">
+                            <input type="radio" asp-for="Gender" value="Erkek" class="form-check-input">
+                            <span class="form-check-label">Erkek</span>
+                        </label>
+                    </div>
+                    <span asp-validation-for="Gender"></span>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="col-lg-6">
+        <fieldset>
+            <legend class="fs-base fw-bold border-bottom pb-2 mb-3">
+                İletişim Bilgileri
+            </legend>
+            <div class="row mb-3">
+                <label asp-for="Email" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9">
+                    <input type="email" class="form-control" asp-for="Email" />
+                    <span asp-validation-for="Email"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Phone" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9">
+                    <input class="form-control phone-mask" asp-for="Phone" />
+                    <span asp-validation-for="Phone"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="Address" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9">
+                    <textarea asp-for="Address" class="form-control"></textarea>
+                    <span asp-validation-for="Address"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="SendEmailNotifications" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 d-flex align-items-center">
+                    <input asp-for="SendEmailNotifications" />
+                    <span asp-validation-for="SendEmailNotifications"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="SendSmsNotifications" class="col-lg-3 col-form-label"></label>
+                <div class="col-lg-9 d-flex align-items-center">
+                    <input asp-for="SendSmsNotifications" />
+                    <span asp-validation-for="SendSmsNotifications"></span>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

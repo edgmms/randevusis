@@ -1,0 +1,101 @@
+﻿@using Hyper.Core.Domain.Appointments;
+@model AppointmentCreateModel
+@{
+    Layout = null;
+}
+<div class="row">
+    <div class="col-lg-12">
+        <fieldset>
+            <form asp-action="Create" asp-antiforgery="true">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row mb-2">
+                    <label asp-for="StartDate" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        <input type="text" asp-for="StartDate" autocomplete="off" class="form-control datepicker-basic" />
+                        <span asp-validation-for="StartDate"></span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label asp-for="StartTime" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        <input type="time" asp-for="StartTime" class="form-control" />
+                        <span asp-validation-for="StartTime"></span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label asp-for="DurationAsMinute" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        @*<input asp-for="DurationAsMinute" class="form-control" />*@
+                        <select asp-for="DurationAsMinute" asp-items="Model.AvailableDurations" class="form-select"></select>
+                        <span asp-validation-for="DurationAsMinute"></span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label asp-for="PeriodTypeId" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        <select asp-for="PeriodTypeId" asp-items="Model.AvailablePeriodTypes" class="form-select"></select>
+                        <span asp-validation-for="PeriodTypeId"></span>
+                    </div>
+                </div>
+                <div class="row mb-2" id="periodCountPanel">
+                    <label asp-for="PeriodCount" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        <input asp-for="PeriodCount" class="form-control" />
+                        <span asp-validation-for="PeriodCount"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label asp-for="ProductId" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        <select asp-for="ProductId" asp-items="Model.AvailableProducts" class="form-select"></select>
+                        <span asp-validation-for="ProductId"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label asp-for="DiscountTotal" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        <input asp-for="DiscountTotal" class="form-control" />
+                        <span asp-validation-for="DiscountTotal"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label asp-for="AssignedPatientId" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        <select asp-for="AssignedPatientId" asp-items="Model.AvailablePatients" class="form-control">
+                        </select>
+                        <span asp-validation-for="AssignedPatientId"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label asp-for="AssignedEmployeeId" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        <select asp-for="AssignedEmployeeId" asp-items="Model.AvailableEmployees" class="form-select"></select>
+                        <span asp-validation-for="AssignedEmployeeId"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <label asp-for="Note" class="col-lg-3 col-form-label"></label>
+                    <div class="col-lg-9">
+                        <textarea asp-for="Note" class="form-control"></textarea>
+                        <span asp-validation-for="Note"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <label asp-for="SendSmsToPatient" class="form-check form-check-inline form-switch">
+                        <input asp-for="SendSmsToPatient" type="checkbox" class="form-check-input" checked>
+                        <span class="form-check-label">Sms Gönderilsin Mi?</span>
+                        <span asp-validation-for="SendSmsToPatient"></span>
+                    </label>
+                    <button name="save" value="save" type="submit" class="btn btn-primary ms-3">Randevu Oluştur <i class="ph-paper-plane-tilt ms-2"></i></button>
+                </div>
+
+            </form>
+        </fieldset>
+    </div>
+</div>

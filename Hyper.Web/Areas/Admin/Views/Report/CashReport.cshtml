@@ -1,0 +1,318 @@
+﻿@model CashReportModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Günlük randevu raporu  </h5>
+                <p>
+                    @Model.DailyHeaderText
+                </p>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-nowrap">
+                    <thead>
+                        <tr>
+                            <th width="20%">Randevu Durumu</th>
+                            <th width="10%">Adet </th>
+                            <th class="text-end">Fiyat </th>
+                            <th>İndirimli Fiyat </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bekliyor:</strong></td>
+                            <td><strong>@Model.DailyTotalAppointmentPendingCount</strong></td>
+                            <td class="text-end"><strong>@Model.DailyAppointmentPendingTotalPrice </strong></td>
+                            <td><strong>@Model.DailyAppointmentPendingTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-indigo">
+                            <td><strong>Onay Alındı:</strong></td>
+                            <td><strong>@Model.DailyTotalAppointmentPatientConfirmedCount</strong></td>
+                            <td class="text-end"><strong>@Model.DailyAppointmentPatientConfirmedTotalPrice </strong></td>
+                            <td><strong>@Model.DailyAppointmentPatientConfirmedTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-warning">
+                            <td><strong>Ertelendi:</strong></td>
+                            <td><strong>@Model.DailyTotalAppointmentPostponedCount</strong></td>
+                            <td class="text-end"><strong>@Model.DailyAppointmentPostponedTotalPrice </strong></td>
+                            <td><strong>@Model.DailyAppointmentPostponedTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-danger">
+                            <td><strong>İptal Oldu:</strong></td>
+                            <td><strong>@Model.DailyTotalAppointmentCanceledCount</strong></td>
+                            <td class="text-end"><strong>@Model.DailyAppointmentCanceledTotalPrice </strong></td>
+                            <td><strong>@Model.DailyAppointmentCanceledTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-success">
+                            <td><strong>Tamamlandı:</strong></td>
+                            <td><strong>@Model.DailyTotalAppointmentCompletedCount</strong></td>
+                            <td class="text-end">
+                                <strong>
+                                    @Model.DailyAppointmentCompletedTotalPrice
+                                    <br />
+                                    <small>(Kredi Kartı)  @Model.DailyAppointmentCompletedCreditCardTotalPrice -</small>
+                                    <small>(Nakit)  @Model.DailyAppointmentCompletedCashTotalPrice</small>
+                                </strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    @Model.DailyAppointmentCompletedTotalDiscountedPrice
+                                    <br />
+                                    <small>(Kredi Kartı) @Model.DailyAppointmentCompletedCreditCardTotalDiscountedPrice -</small>
+                                    <small>(Nakit)  @Model.DailyAppointmentCompletedCashTotalDiscountedPrice </small>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Toplamlar:</strong></td>
+                            <td>
+                                <strong>
+                                    @(
+                                        Model.DailyTotalAppointmentPendingCount +
+                                        Model.DailyTotalAppointmentPatientConfirmedCount +
+                                        Model.DailyTotalAppointmentPostponedCount +
+                                        Model.DailyTotalAppointmentCanceledCount +
+                                        Model.DailyTotalAppointmentCompletedCount
+                                        )
+                                </strong>
+                            </td>
+                            <td class="text-end">
+                                <strong>
+                                    @(
+                                        Model.DailyAppointmentPendingTotalPrice +
+                                        Model.DailyAppointmentPostponedTotalPrice +
+                                        Model.DailyAppointmentPatientConfirmedTotalPrice +
+                                        Model.DailyAppointmentCanceledTotalPrice +
+                                        Model.DailyAppointmentCompletedTotalPrice
+                                        )
+                                </strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    @(
+                                        Model.DailyAppointmentPendingTotalDiscountedPrice +
+                                        Model.DailyAppointmentPostponedTotalDiscountedPrice +
+                                        Model.DailyAppointmentPatientConfirmedTotalDiscountedPrice +
+                                        Model.DailyAppointmentCanceledTotalDiscountedPrice +
+                                        Model.DailyAppointmentCompletedTotalDiscountedPrice
+                                        )
+                                </strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Haftalık randevu raporu </h5>
+                <p>
+                    @Model.WeeklyHeaderText
+                </p>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-nowrap">
+                    <thead>
+                        <tr>
+                            <th width="20%">Randevu Durumu</th>
+                            <th width="10%">Adet </th>
+                            <th class="text-end">Fiyat </th>
+                            <th>İndirimli Fiyat </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bekliyor:</strong></td>
+                            <td><strong>@Model.WeeklyTotalAppointmentPendingCount</strong></td>
+                            <td class="text-end"><strong>@Model.WeeklyAppointmentPendingTotalPrice </strong></td>
+                            <td><strong>@Model.WeeklyAppointmentPendingTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-indigo">
+                            <td><strong>Onay Alındı:</strong></td>
+                            <td><strong>@Model.WeeklyTotalAppointmentPatientConfirmedCount</strong></td>
+                            <td class="text-end"><strong>@Model.WeeklyAppointmentPatientConfirmedTotalPrice </strong></td>
+                            <td><strong>@Model.WeeklyAppointmentPatientConfirmedTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-warning">
+                            <td><strong>Ertelendi:</strong></td>
+                            <td><strong>@Model.WeeklyTotalAppointmentPostponedCount</strong></td>
+                            <td class="text-end"><strong>@Model.WeeklyAppointmentPostponedTotalPrice </strong></td>
+                            <td><strong>@Model.WeeklyAppointmentPostponedTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-danger">
+                            <td><strong>İptal Oldu:</strong></td>
+                            <td><strong>@Model.WeeklyTotalAppointmentCanceledCount</strong></td>
+                            <td class="text-end"><strong>@Model.WeeklyAppointmentCanceledTotalPrice </strong></td>
+                            <td><strong>@Model.WeeklyAppointmentCanceledTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-success">
+                            <td><strong>Tamamlandı:</strong></td>
+                            <td><strong>@Model.WeeklyTotalAppointmentCompletedCount</strong></td>
+                            <td class="text-end">
+                                <strong>
+                                    @Model.WeeklyAppointmentCompletedTotalPrice
+                                    <br />
+                                    <small>(Kredi Kartı)  @Model.WeeklyAppointmentCompletedCreditCardTotalPrice -</small>
+                                    <small>(Nakit)  @Model.WeeklyAppointmentCompletedCashTotalPrice</small>
+                                </strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    @Model.WeeklyAppointmentCompletedTotalDiscountedPrice
+                                    <br />
+                                    <small> (Kredi Kartı) @Model.WeeklyAppointmentCompletedCreditCardTotalDiscountedPrice  -</small>
+                                    <small> (Nakit) @Model.WeeklyAppointmentCompletedCashTotalDiscountedPrice  </small>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Toplamlar:</strong></td>
+                            <td>
+                                <strong>
+                                    @(
+                                        Model.WeeklyTotalAppointmentPendingCount +
+                                        Model.WeeklyTotalAppointmentPostponedCount +
+                                        Model.WeeklyTotalAppointmentPatientConfirmedCount +
+                                        Model.WeeklyTotalAppointmentCanceledCount +
+                                        Model.WeeklyTotalAppointmentCompletedCount
+                                        )
+                                </strong>
+                            </td>
+                            <td class="text-end">
+                                <strong>
+                                    @(
+                                        Model.WeeklyAppointmentPendingTotalPrice +
+                                        Model.WeeklyAppointmentPostponedTotalPrice +
+                                        Model.WeeklyAppointmentPatientConfirmedTotalPrice +
+                                        Model.WeeklyAppointmentCanceledTotalPrice +
+                                        Model.WeeklyAppointmentCompletedTotalPrice
+                                        )
+                                </strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    @(
+                                        Model.WeeklyAppointmentPendingTotalDiscountedPrice +
+                                        Model.WeeklyAppointmentPostponedTotalDiscountedPrice +
+                                        Model.WeeklyAppointmentPatientConfirmedTotalDiscountedPrice +
+                                        Model.WeeklyAppointmentCanceledTotalDiscountedPrice +
+                                        Model.WeeklyAppointmentCompletedTotalDiscountedPrice
+                                        )
+                                </strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>
+                    Aylık randevu raporu
+                </h5>
+                <p>
+                    @Model.MonthlyHeaderText
+                </p>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-nowrap">
+                    <thead>
+                        <tr>
+                            <th width="20%">Randevu Durumu</th>
+                            <th width="10%">Adet </th>
+                            <th class="text-end">Fiyat </th>
+                            <th>İndirimli Fiyat </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bekliyor:</strong></td>
+                            <td><strong>@Model.MonthlyTotalAppointmentPendingCount</strong></td>
+                            <td class="text-end"><strong>@Model.MonthlyAppointmentPendingTotalPrice </strong></td>
+                            <td><strong>@Model.MonthlyAppointmentPendingTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-indigo">
+                            <td><strong>Onay Alındı:</strong></td>
+                            <td><strong>@Model.MonthlyTotalAppointmentPatientConfirmedCount</strong></td>
+                            <td class="text-end"><strong>@Model.MonthlyAppointmentPatientConfirmedTotalPrice </strong></td>
+                            <td><strong>@Model.MonthlyAppointmentPatientConfirmedTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-warning">
+                            <td><strong>Ertelendi:</strong></td>
+                            <td><strong>@Model.MonthlyTotalAppointmentPostponedCount</strong></td>
+                            <td class="text-end"><strong>@Model.MonthlyAppointmentPostponedTotalPrice </strong></td>
+                            <td><strong>@Model.MonthlyAppointmentPostponedTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-danger">
+                            <td><strong>İptal Oldu:</strong></td>
+                            <td><strong>@Model.MonthlyTotalAppointmentCanceledCount</strong></td>
+                            <td class="text-end"><strong>@Model.MonthlyAppointmentCanceledTotalPrice </strong></td>
+                            <td><strong>@Model.MonthlyAppointmentCanceledTotalDiscountedPrice </strong></td>
+                        </tr>
+                        <tr class="text-success">
+                            <td><strong>Tamamlandı:</strong></td>
+                            <td><strong>@Model.MonthlyTotalAppointmentCompletedCount</strong></td>
+                            <td class="text-end">
+                                <strong>
+                                    @Model.MonthlyAppointmentCompletedTotalPrice
+                                    <br />
+                                    <small>(Kredi Kartı)  @Model.MonthlyAppointmentCompletedCreditCardTotalPrice -</small>
+                                    <small>(Nakit)  @Model.MonthlyAppointmentCompletedCashTotalPrice</small>
+                                </strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    @Model.MonthlyAppointmentCompletedTotalDiscountedPrice
+                                    <br />
+                                    <small>(Kredi Kartı) @Model.MonthlyAppointmentCompletedCreditCardTotalDiscountedPrice  -</small>
+                                    <small>(Nakit) @Model.MonthlyAppointmentCompletedCashTotalDiscountedPrice  </small>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Toplamlar:</strong></td>
+                            <td>
+                                <strong>
+                                    @(
+                                        Model.MonthlyTotalAppointmentPendingCount +
+                                        Model.MonthlyTotalAppointmentPostponedCount +
+                                        Model.MonthlyTotalAppointmentPatientConfirmedCount +
+                                        Model.MonthlyTotalAppointmentCanceledCount +
+                                        Model.MonthlyTotalAppointmentCompletedCount
+                                        )
+                                </strong>
+                            </td>
+                            <td class="text-end">
+                                <strong>
+                                    @(
+                                        Model.MonthlyAppointmentPendingTotalPrice +
+                                        Model.MonthlyAppointmentPostponedTotalPrice +
+                                        Model.MonthlyAppointmentPatientConfirmedTotalPrice +
+                                        Model.MonthlyAppointmentCanceledTotalPrice +
+                                        Model.MonthlyAppointmentCompletedTotalPrice
+                                        )
+                                </strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    @(
+                                        Model.MonthlyAppointmentPendingTotalDiscountedPrice +
+                                        Model.MonthlyAppointmentPostponedTotalDiscountedPrice +
+                                        Model.MonthlyAppointmentPatientConfirmedTotalDiscountedPrice +
+                                        Model.MonthlyAppointmentCanceledTotalDiscountedPrice +
+                                        Model.MonthlyAppointmentCompletedTotalDiscountedPrice
+                                        )
+                                </strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,26 @@
+﻿@model EmployeeModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+              <div class="card-header d-flex align-items-center">
+                <h2 class="mb-0">Personel Bilgileri</h2>
+                <span class="text-muted ms-2"><a asp-action="List"> <i class="ph-arrow-left"></i> Listeye Dön </a></span>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" asp-antiforgery="true">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <partial name="_CreateOrEdit" model="Model"></partial>
+                    <div class="text-end">
+                        <button type="submit" name="saveContinue" value="true" class="btn btn-primary">
+                            Kaydet ve Devam Et<i class="ph-paper-plane-tilt ms-2"></i>
+                        </button>
+                        <button type="submit" name="save" class="btn btn-primary">
+                            Kaydet <i class="ph-paper-plane-tilt ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
